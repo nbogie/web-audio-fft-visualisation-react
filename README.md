@@ -1,8 +1,10 @@
-[![Build Status](https://travis-ci.org/strengthmate/web-audio-fft-visualization-with-react-hooks.svg?branch=master)](https://travis-ci.org/strengthmate/web-audio-fft-visualization-with-react-hooks) ![stability-experimental](https://img.shields.io/badge/stability-experimental-orange.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+This is a simplified fork of https://github.com/matt-eric/web-audio-fft-visualization-with-react-hooks for study.
+
+(I re-created my git repo from scratch as the original was carrying 150Mb (presumably in historic objects))
+
+## content from original readme
 
 A method for visualizing live spectral data of an audio source in React.js.
-
-Try the [Live Demo](https://strengthmate.github.io/web-audio-fft-visualization-with-react-hooks/).
 
 View a more detailed description on [Medium](https://medium.com/@accomplish3d/using-react-ui-components-to-visualize-real-time-spectral-data-of-an-audio-source-17a498a6d8d7)
 
@@ -19,9 +21,6 @@ The aim of this project is to visualize each frequency band of an audio data sou
 There are alternate approaches to visualizing real-time frequency data of an audio source by producing the data in a single canvas. Such methods can impose limitations for passing the data to other React.js components for re-use outside of the single canvas component.
 
 Using this data with React.js hooks provides significant potential for how the data can be visualized in React.js. The current demonstration provides just one visual representation of the frequency data of an audio source. This project is intended to have more examples in the future.
-
-
-
 
 ## Available Scripts
 
