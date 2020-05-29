@@ -7,10 +7,11 @@ class AudioDataContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {}
-    this.frequencyBandArray = [...Array(25).keys()]
+    this.frequencyBandArray = [...Array(26).keys()]
   }
 
   initializeAudioAnalyser = () => {
+    console.log("Initialising audioContext")
     const audioFile = new Audio();
     const audioContext = new AudioContext();
     const source = audioContext.createMediaElementSource(audioFile);
@@ -20,28 +21,28 @@ class AudioDataContainer extends React.Component {
     source.connect(audioContext.destination);
     source.connect(analyser);
     audioFile.play()
-      this.setState({
-        audioData: analyser
-      })
+    this.setState({
+      audioAnalyser: analyser
+    })
   }
 
-  getFrequencyData = (styleAdjuster) => {
-    const bufferLength = this.state.audioData.frequencyBinCount;
+  withFrequencyData = (callbackFn) => {
+    const bufferLength = this.state.audioAnalyser.frequencyBinCount;
     const amplitudeArray = new Uint8Array(bufferLength);
-    this.state.audioData.getByteFrequencyData(amplitudeArray)
-    styleAdjuster(amplitudeArray)
+    this.state.audioAnalyser.getByteFrequencyData(amplitudeArray)
+    callbackFn(amplitudeArray)
   }
 
-  render(){
-
+  render() {
     return (
       <div>
         <VisualDemo
           initializeAudioAnalyser={this.initializeAudioAnalyser}
           frequencyBandArray={this.frequencyBandArray}
-          getFrequencyData={this.getFrequencyData}
-          audioData={this.state.audioData}
+          withFrequencyData={this.withFrequencyData}
+          audioAnalyser={this.state.audioAnalyser}
         />
+
       </div>
     );
   }

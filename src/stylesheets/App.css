@@ -1,0 +1,21 @@
+#startButton {
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.frequencyBand {
+  padding: 0px;
+  margin: 2px;
+  width: 30px;
+  text-align: center;
+  background-color: skyblue;
+}
+
+.eq {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+  border: 1px solid #ccc;
+}

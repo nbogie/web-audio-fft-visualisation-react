@@ -1,78 +1,52 @@
-import React, { useRef }  from 'react';
-import Paper from '@material-ui/core/Paper';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import EqualizerIcon from '@material-ui/icons/Equalizer';
-import { makeStyles } from '@material-ui/core/styles';
-import '../stylesheets/App.scss';
+import React from 'react';
+import '../stylesheets/App.css';
 
-const useStyles = makeStyles(theme => ({
-  flexContainer: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    paddingTop: '25%'
+function VisualDemo(props) {
+
+  function adjustFreqBandStyle(newAmplitudeData) {
+    let domElements = props.frequencyBandArray.map((num) =>
+      document.getElementById(num)
+    )
+    for (let num of props.frequencyBandArray) {
+      domElements[num].style.height = `${newAmplitudeData[num]}px`
+    }
+  };
+
+  function animateOneFrame() {
+    props.withFrequencyData(adjustFreqBandStyle)
+    requestAnimationFrame(animateOneFrame)
   }
-}));
 
-export default function VisualDemo(props) {
+  function handleStartButtonClick() {
+    props.initializeAudioAnalyser()
+    requestAnimationFrame(animateOneFrame)
+  }
 
-    const classes = useStyles();
+  return (
 
-    const amplitudeValues = useRef(null);
-
-    function adjustFreqBandStyle(newAmplitudeData){
-      amplitudeValues.current = newAmplitudeData;
-      let domElements = props.frequencyBandArray.map((num) =>
-        document.getElementById(num))
-      for(let i=0; i<props.frequencyBandArray.length; i++){
-        let num = props.frequencyBandArray[i]
-        domElements[num].style.backgroundColor = `rgb(0, 255, ${amplitudeValues.current[num]})`
-        domElements[num].style.height = `${amplitudeValues.current[num]}px`
-      }
-    };
-
-    function runSpectrum(){
-      props.getFrequencyData(adjustFreqBandStyle)
-      requestAnimationFrame(runSpectrum)
-    }
-
-    function handleStartBottonClick(){
-      props.initializeAudioAnalyser()
-      requestAnimationFrame(runSpectrum)
-    }
-
-    return (
+    <div>
 
       <div>
-
-        <div>
-          <Tooltip
-            title="Start"
-            aria-label="Start"
-            placement="right">
-            <IconButton
-              id='startButton'
-              onClick={() => handleStartBottonClick()}
-              disabled={!!props.audioData ? true : false}>
-              <EqualizerIcon/>
-            </IconButton>
-          </Tooltip>
-        </div>
-
-        <div className={classes.flexContainer}>
-          {props.frequencyBandArray.map((num) =>
-            <Paper
-              className={'frequencyBands'}
-              elevation={4}
-              id={num}
-              key={num}
-            />
-          )}
-        </div>
-
+        <button
+          id='startButton'
+          onClick={() => handleStartButtonClick()}
+          disabled={!!props.audioAnalyser}
+        > Start!
+        </button>
       </div>
 
-    );
+      <div className="eq">
+        {props.frequencyBandArray.map((num) =>
+          <div id={num} className='frequencyBand' key={num}>
+            {num}
+          </div>
+        )}
+      </div>
+
+    </div >
+
+  );
 
 }
+
+export default VisualDemo;
